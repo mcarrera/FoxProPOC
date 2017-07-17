@@ -16,6 +16,7 @@ namespace FoxProPOC
         {
 
             var conn = Connection;
+            conn.Open();
             var comm = conn.CreateCommand();
             comm.CommandText = @"SELECT * FROM crop";
 
@@ -34,11 +35,12 @@ namespace FoxProPOC
 
             foreach (object[] row in arrayList)
             {
+                var stringBuilder = new StringBuilder();
                 foreach (var column in row)
                 {
-                    Console.WriteLine(column.ToString());
+                    stringBuilder.Append($"{column.ToString().Trim()} ");
                 }
-
+                Console.WriteLine(stringBuilder.ToString().Trim());
             }
         }
 

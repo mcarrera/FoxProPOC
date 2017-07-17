@@ -14,13 +14,9 @@ namespace FoxProPOC
     {
         static void Main(string[] args)
         {
-            var connString = ConfigurationManager.ConnectionStrings["FoxProPOC.Properties.Settings.ConnectionString"]
-                .ConnectionString;
 
-            OleDbConnection conn = new OleDbConnection(connString);
-            conn.Open();
-
-            OleDbCommand comm = conn.CreateCommand();
+            var conn = Connection;
+            var comm = conn.CreateCommand();
             comm.CommandText = @"SELECT * FROM crop";
 
             IDataReader reader = comm.ExecuteReader();
@@ -45,5 +41,16 @@ namespace FoxProPOC
 
             }
         }
+
+        private static OleDbConnection Connection
+        {
+            get
+            {
+                var connectionString = ConfigurationManager.ConnectionStrings["FoxProPOC.Properties.Settings.ConnectionString"].ConnectionString;
+                return new OleDbConnection(connectionString);
+            }
+        }
     }
+
+
 }
